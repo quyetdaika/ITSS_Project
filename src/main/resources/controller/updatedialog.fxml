@@ -33,7 +33,7 @@
         </rowConstraints>
          <children>
             <Label text="Quantity" />
-            <TextField fx:id="quantityTf" onAction="#quantityTfEntered" onMouseExited="#quantityTfEntered" promptText="Enter a positive value" GridPane.columnIndex="1" />
+            <TextField fx:id="quantityTf" onAction="#quantityTfEntered" promptText="Enter a positive value" GridPane.columnIndex="1" />
             <Label layoutX="20.0" layoutY="35.0" text="Unit" GridPane.rowIndex="2" />
             <TextField fx:id="unitTf" layoutX="250.0" layoutY="31.0" onAction="#unitTfEntered" promptText="Enter a positive value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label layoutX="20.0" layoutY="102.0" prefHeight="18.0" prefWidth="123.0" text="Desired Delivery Date" GridPane.rowIndex="4" />

@@ -46,7 +46,6 @@ public class SaleOrderDetailViewController implements Initializable {
     @FXML
     private Button deteleItemBtn;
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -76,54 +75,12 @@ public class SaleOrderDetailViewController implements Initializable {
 
             UpdateDialogController updateDialogController = fxmlLoader.getController();
             updateDialogController.setValue(selectedItem);
-
-            Dialog updateItemDialog  = new Dialog();
-            updateItemDialog.setTitle("Update Sale Order Item");
-            updateItemDialog.setDialogPane(updateDialogPane);
-
-            Window window = updateItemDialog.getDialogPane().getScene().getWindow();
-            window.setOnCloseRequest(event -> updateItemDialog.close());
-
-            updateItemDialog.show();
+            updateDialogController.showDialog(updateDialogPane);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
-
-//        updateItemDialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-//        updateItemDialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-//        updateItemDialog.getDialogPane().setContent(updateForm(selectedItem));
-//
-////        updateItemDialog.getDialogPane().getButtonTypes().get(1).
-//        updateItemDialog.show();
     }
-//
-//    private Node updateForm(SaleOrderItem selectedItem){
-//        GridPane gridPane = new GridPane();
-//        gridPane.setHgap(10);
-//        gridPane.setVgap(10);
-//
-//        Label merchandiseCodeLbl = new Label("Merchandise Code");
-//        merchandiseCodeLbl.setFont(Font.font(14));
-//
-//        Label merchandiseCodeValue = new Label(selectedItem.getMerchandiseCode());
-//        merchandiseCodeValue.setFont(Font.font(14));
-//
-//
-//        gridPane.add(merchandiseCodeLbl, 0, 0);
-//        gridPane.add(merchandiseCodeValue, 1, 0);
-//
-//        gridPane.add(new Label("Quantity Ordered"), 0, 1);
-//        TextField quantityTf = new TextField(String.valueOf(selectedItem.getQuantityOrdered()));
-//        gridPane.add(quantityTf, 1, 1);
-//
-//        gridPane.add(new Label("Unit"), 0, 2);
-//        gridPane.add(new TextField(String.valueOf(selectedItem.getUnit())), 1, 2);
-//
-//        gridPane.add(new Label("Derised Delivery Date"), 0, 3);
-//        gridPane.add(new TextField(String.valueOf(selectedItem.getDesiredDeliveryDate())), 1, 3);
-//
-//        return gridPane;
-//    }
+
 
     private void quantityHandler() {
     }
