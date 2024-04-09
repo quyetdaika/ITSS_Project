@@ -8,11 +8,10 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.SaleOrderItem;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.Optional;
 
-public class UpdateDialogController {
+public class UpdateItemDialogController {
     @FXML
     private TextField quantityTf;
 

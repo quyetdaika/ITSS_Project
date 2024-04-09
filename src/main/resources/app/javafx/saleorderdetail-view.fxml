@@ -20,7 +20,7 @@
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <HBox alignment="CENTER_LEFT" prefHeight="47.0" prefWidth="600.0" spacing="10.0" VBox.vgrow="NEVER">
+            <HBox alignment="CENTER" prefHeight="47.0" prefWidth="600.0" spacing="400.0" VBox.vgrow="NEVER">
                <children>
                   <Label minWidth="-Infinity" text="Sale Order 001">
                      <HBox.margin>
@@ -30,9 +30,9 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="addBtn" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Add merchandise">
+                  <Button fx:id="addItemBtn" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#addItemBtnClicked" text="Add Item" textFill="#019a13">
                      <HBox.margin>
-                        <Insets left="350.0" right="10.0" />
+                        <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
                </children>
@@ -55,11 +55,11 @@
             </ScrollPane>
             <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button fx:id="updateItemBtn" mnemonicParsing="false" onAction="#updateItemBtnClicked" text="Update Item">
+                  <Button fx:id="updateItemBtn" mnemonicParsing="false" onAction="#updateItemBtnClicked" text="Update Item" textFill="#0436ff" visible="false">
                      <HBox.margin>
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="deleteItemBtn" mnemonicParsing="false" onAction="#deleteItemBtnClicked" text="Delete Item">
+                  <Button fx:id="deleteItemBtn" mnemonicParsing="false" onAction="#deleteItemBtnClicked" text="Delete Item" textFill="RED" visible="false">
                      <HBox.margin>
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin>

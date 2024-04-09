@@ -6,27 +6,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
-import javafx.stage.Window;
 import model.SaleOrderItem;
-import mysqlsubsystem.MySQLSaleOrderDB;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SaleOrderDetailViewController implements Initializable {
-    public Button deleteItemBtn;
     @FXML
     private TableView<SaleOrderItem> saleOrderDetailTable;
 
@@ -45,10 +36,13 @@ public class SaleOrderDetailViewController implements Initializable {
     private ObservableList<SaleOrderItem> orderItems;
 
     @FXML
+    private Button addItemBtn;
+
+    @FXML
     private Button updateItemBtn;
 
     @FXML
-    private Button deteleItemBtn;
+    private Button deleteItemBtn;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -67,16 +61,23 @@ public class SaleOrderDetailViewController implements Initializable {
         dateColumn.setCellValueFactory(new PropertyValueFactory<SaleOrderItem, Date>("desiredDeliveryDate"));
 
         saleOrderDetailTable.setItems(orderItems);
+
+        saleOrderDetailTable.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    if(updateItemBtn != null) updateItemBtn.setVisible(newValue != null);
+                    if(deleteItemBtn != null) deleteItemBtn.setVisible(newValue != null);
+                }
+        );
     }
 
     public void updateItemBtnClicked(ActionEvent e){
         SaleOrderItem selectedItem = saleOrderDetailTable.getSelectionModel().getSelectedItem();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("updatedialog.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("updateitemdialog.fxml"));
             DialogPane updateDialogPane = fxmlLoader.load();
 
-            UpdateDialogController updateDialogController = fxmlLoader.getController();
+            UpdateItemDialogController updateDialogController = fxmlLoader.getController();
             updateDialogController.setValue(selectedItem);
             updateDialogController.getDialog(updateDialogPane).showAndWait();
 
@@ -104,8 +105,22 @@ public class SaleOrderDetailViewController implements Initializable {
         }
     }
 
+    public void addItemBtnClicked(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("additemdialog.fxml"));
+            DialogPane updateDialogPane = fxmlLoader.load();
 
-    private void quantityHandler() {
+            AddItemDialogController addDialogController = fxmlLoader.getController();
+            addDialogController.setValue();
+            addDialogController.getDialog(updateDialogPane).showAndWait();
+
+            if(addDialogController.isAddBtnClicked()) {
+                System.out.println("New item : " + addDialogController.getSaleOrderItem());
+                orderItems.add(addDialogController.getSaleOrderItem());
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
-
 }

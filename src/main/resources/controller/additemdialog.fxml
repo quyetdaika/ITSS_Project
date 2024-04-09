@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateDialogController">
+<DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddItemDialogController">
     <expandableContent>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0" />
     </expandableContent>
@@ -23,6 +23,8 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -32,29 +34,36 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Quantity" />
-            <TextField fx:id="quantityTf" onAction="#quantityTfEntered" promptText="Enter a positive value" GridPane.columnIndex="1" />
-            <Label layoutX="20.0" layoutY="35.0" text="Unit" GridPane.rowIndex="2" />
-            <TextField fx:id="unitTf" layoutX="250.0" layoutY="31.0" onAction="#unitTfEntered" promptText="Enter a positive value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label layoutX="20.0" layoutY="102.0" prefHeight="18.0" prefWidth="123.0" text="Desired Delivery Date" GridPane.rowIndex="4" />
-            <TextField fx:id="dateTf" layoutX="250.0" layoutY="98.0" onAction="#dateTfEntered" promptText="Enter a day that after today" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <Label text="Quantity" GridPane.rowIndex="2" />
+            <TextField fx:id="quantityTf" onAction="#quantityTfEntered" promptText="Enter a positive value" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label layoutX="20.0" layoutY="35.0" text="Unit" GridPane.rowIndex="4" />
+            <TextField fx:id="unitTf" layoutX="250.0" layoutY="31.0" onAction="#unitTfEntered" promptText="Enter a positive value" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label layoutX="20.0" layoutY="102.0" prefHeight="18.0" prefWidth="123.0" text="Desired Delivery Date" GridPane.rowIndex="6" />
+            <TextField fx:id="dateTf" layoutX="250.0" layoutY="98.0" onAction="#dateTfEntered" promptText="Enter a day that after today" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <children>
-                  <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#updateBtnClicked" text="Update" />
+                  <Button fx:id="addBtn" mnemonicParsing="false" onAction="#addBtnClicked" text="Add" textFill="#098f20" />
                   <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Cancel" />
                </children>
             </HBox>
-            <Label fx:id="quantityErrLbl" text="Quantiy must be a positive value !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="quantityErrLbl" text="Quantiy must be a positive value !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label fx:id="unitErrLbl" text="Unit must be a positive value !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="unitErrLbl" text="Unit must be a positive value !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label fx:id="dateErrLbl" text="Derised Delivery Date must be after today !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="dateErrLbl" text="Derised Delivery Date must be after today !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <Label layoutX="50.0" layoutY="59.0" text="Merchandise Code" />
+            <TextField fx:id="codeTf" layoutX="265.0" layoutY="55.0" onAction="#codeTfEntered" promptText="Enter merchandise code" GridPane.columnIndex="1" />
+            <Label fx:id="codeErrLbl" layoutX="265.0" layoutY="83.0" text="Merchandise code can not be null !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="10.0" />
                </font>
@@ -68,15 +77,10 @@
    <header>
       <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="480.0" spacing="20.0">
          <children>
-            <Label text="Merchandise Code">
+            <Label text="Add New Merchandise Item">
                <HBox.margin>
                   <Insets left="40.0" />
                </HBox.margin>
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="codeLbl" text="P001">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
