@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class SaleOrderDetailViewController implements Initializable {
@@ -67,7 +68,6 @@ public class SaleOrderDetailViewController implements Initializable {
 
     public void updateItemBtnClicked(ActionEvent e){
         SaleOrderItem selectedItem = saleOrderDetailTable.getSelectionModel().getSelectedItem();
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("updatedialog.fxml"));
@@ -75,7 +75,13 @@ public class SaleOrderDetailViewController implements Initializable {
 
             UpdateDialogController updateDialogController = fxmlLoader.getController();
             updateDialogController.setValue(selectedItem);
-            updateDialogController.showDialog(updateDialogPane);
+            updateDialogController.getDialog(updateDialogPane).showAndWait();
+
+            if(updateDialogController.isUpdateBtnClicked()) {
+                System.out.println("index : " + orderItems.indexOf(selectedItem));
+                System.out.println("New item : " + updateDialogController.getSaleOrderItem());
+                orderItems.set(orderItems.indexOf(selectedItem), updateDialogController.getSaleOrderItem());
+            }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
