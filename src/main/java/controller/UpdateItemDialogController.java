@@ -8,11 +8,10 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.SaleOrderItem;
 
-import java.io.IOException;
 import java.sql.Date;
 import java.util.Optional;
 
-public class UpdateDialogController {
+public class UpdateItemDialogController {
     @FXML
     private TextField quantityTf;
 
@@ -44,7 +43,9 @@ public class UpdateDialogController {
 
     private Dialog updateItemDialog;
 
-    public void showDialog(DialogPane updateDialogPane){
+    private boolean updateBtnClicked;
+
+    public Dialog getDialog(DialogPane updateDialogPane){
         updateItemDialog  = new Dialog();
         updateItemDialog.setTitle("Update Sale Order Item");
         updateItemDialog.setDialogPane(updateDialogPane);
@@ -52,7 +53,7 @@ public class UpdateDialogController {
         Window window = updateItemDialog.getDialogPane().getScene().getWindow();
         window.setOnCloseRequest(event -> updateItemDialog.close());
 
-        updateItemDialog.show();
+        return updateItemDialog;
     }
 
     public void closeDialog(){
@@ -80,7 +81,45 @@ public class UpdateDialogController {
         checkDate();
     }
 
+    public boolean isUpdateBtnClicked() {
+        return updateBtnClicked;
+    }
+
     public void updateBtnClicked(ActionEvent actionEvent) {
+        if(checkQuantity() && checkUnit() && checkDate()){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initModality(Modality.APPLICATION_MODAL);
+            alert.getDialogPane().setHeaderText("Do you want to Submit ?");
+            String alertContentText = getChangedValue();
+            alert.getDialogPane().setContentText(alertContentText);
+
+            Optional<ButtonType> choosen = alert.showAndWait();
+            if(choosen.get() == ButtonType.OK){
+                updateItemNewValue();
+                updateBtnClicked = true;
+                closeDialog();
+            }
+        }
+    }
+
+    private String getChangedValue() {
+        String changedValue = "";
+        if(this.getSaleOrderItem().getQuantityOrdered() != Integer.parseInt(quantityTf.getText())){
+            changedValue += "Quantity : " + this.getSaleOrderItem().getQuantityOrdered() + " -> " + Integer.parseInt(quantityTf.getText()) + "\n";
+        }
+        if(this.getSaleOrderItem().getUnit() != Integer.parseInt(unitTf.getText())){
+            changedValue += "Unit : " + this.getSaleOrderItem().getUnit() + " -> " + Integer.parseInt(unitTf.getText()) + "\n";
+        }
+        if(!this.getSaleOrderItem().getDesiredDeliveryDate().equals(Date.valueOf(dateTf.getText()))){
+            changedValue += "Desired Delivery Date : " + this.getSaleOrderItem().getDesiredDeliveryDate() + " -> " + Date.valueOf(dateTf.getText()) + "\n";
+        }
+        return changedValue;
+    }
+
+    private void updateItemNewValue() {
+        this.saleOrderItem.setQuantityOrdered(Integer.parseInt(quantityTf.getText()));
+        this.saleOrderItem.setUnit(Integer.parseInt(unitTf.getText()));
+        this.saleOrderItem.setDesiredDeliveryDate(Date.valueOf(dateTf.getText()));
     }
 
     public void cancelBtnClicked(ActionEvent actionEvent) {
@@ -88,7 +127,7 @@ public class UpdateDialogController {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.getDialogPane().setHeaderText("Do you want to Cancel ?");
         alert.getDialogPane().setContentText("Your process will be discard");
-//        alert.initOwner();
+
         Optional<ButtonType> choosen = alert.showAndWait();
         if(choosen.get() == ButtonType.OK){
             closeDialog();
@@ -96,37 +135,46 @@ public class UpdateDialogController {
 
     }
 
-    public void checkQuantity(){
+    public boolean checkQuantity(){
+        boolean checkRes = false;
         try {
             int quantity = Integer.parseInt(quantityTf.getText());
+            checkRes = quantity > 0;
             quantityErrLbl.setVisible(quantity <= 0);
         } catch (NumberFormatException ex) {
             quantityErrLbl.setVisible(true);
             throw new RuntimeException(ex);
         }
+        return checkRes;
     }
 
-    public void checkUnit(){
+    public boolean checkUnit(){
+        boolean checkRes = false;
         try {
             int unit = Integer.parseInt(unitTf.getText());
+            checkRes = unit > 0;
             unitErrLbl.setVisible(unit <= 0);
         } catch (NumberFormatException ex) {
             unitErrLbl.setVisible(true);
             throw new RuntimeException(ex);
         }
+        return checkRes;
     }
 
-    public void checkDate(){
+    public boolean checkDate(){
+        boolean checkRes = false;
         try {
             Date date = Date.valueOf(dateTf.getText());
             Date currentDate = new Date(System.currentTimeMillis()); // get the current date
 
+            checkRes = date.after(currentDate);
             // Compare the dates
             dateErrLbl.setVisible(currentDate.after(date));
         } catch (Exception e) {
             dateErrLbl.setVisible(true);
             throw new RuntimeException(e);
         }
+        return checkRes;
     }
 
     public void setValue(SaleOrderItem selectedItem) {
@@ -153,5 +201,7 @@ public class UpdateDialogController {
                 checkDate();
             }
         });
+
+        updateBtnClicked = false;
     }
 }

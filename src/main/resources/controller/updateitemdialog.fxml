@@ -44,17 +44,17 @@
                   <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Cancel" />
                </children>
             </HBox>
-            <Label fx:id="quantityTfNoti" text="Quantiy must be a positive value !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label fx:id="quantityErrLbl" text="Quantiy must be a positive value !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label fx:id="unitTfNoti" text="Unit must be a positive value !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="unitErrLbl" text="Unit must be a positive value !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label fx:id="dateTfNoti" text="Derised Delivery Date must be after today !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="dateErrLbl" text="Derised Delivery Date must be after today !" textFill="RED" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font size="10.0" />
                </font>
@@ -76,7 +76,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label text="P001">
+            <Label fx:id="codeLbl" text="P001">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

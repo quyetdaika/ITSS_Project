@@ -76,4 +76,11 @@ public class SaleOrderItem {
 
     public SaleOrderItem() {
     }
+
+    public void setValueFromOtherItem(SaleOrderItem newItem){
+        this.saleOrderID = newItem.getSaleOrderID();
+        this.quantityOrdered = newItem.getQuantityOrdered();
+        this.unit = newItem.getUnit();
+        this.desiredDeliveryDate = newItem.getDesiredDeliveryDate();
+    }
 }
