@@ -30,7 +30,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Button alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Add merchandise">
+                  <Button fx:id="addBtn" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Add merchandise">
                      <HBox.margin>
                         <Insets left="350.0" right="10.0" />
                      </HBox.margin>
@@ -59,7 +59,7 @@
                      <HBox.margin>
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin></Button>
-                  <Button fx:id="deleteItemBtn" mnemonicParsing="false" text="Delete Item">
+                  <Button fx:id="deleteItemBtn" mnemonicParsing="false" onAction="#deleteItemBtnClicked" text="Delete Item">
                      <HBox.margin>
                         <Insets right="10.0" top="10.0" />
                      </HBox.margin>

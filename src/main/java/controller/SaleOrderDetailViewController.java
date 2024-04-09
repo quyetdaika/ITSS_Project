@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Window;
 import model.SaleOrderItem;
 import mysqlsubsystem.MySQLSaleOrderDB;
@@ -21,9 +22,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class SaleOrderDetailViewController implements Initializable {
+    public Button deleteItemBtn;
     @FXML
     private TableView<SaleOrderItem> saleOrderDetailTable;
 
@@ -84,6 +87,20 @@ public class SaleOrderDetailViewController implements Initializable {
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    public void deleteItemBtnClicked(ActionEvent e) {
+        SaleOrderItem selectedItem = saleOrderDetailTable.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.getDialogPane().setHeaderText("Do you want to Detele " + selectedItem.getMerchandiseCode() + " Item ?");
+        alert.getDialogPane().setContentText(selectedItem.toString());
+
+        Optional<ButtonType> choosen = alert.showAndWait();
+        if(choosen.get() == ButtonType.OK){
+            orderItems.remove(selectedItem);
         }
     }
 
